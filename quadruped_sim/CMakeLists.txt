@@ -24,7 +24,7 @@ endif()
 add_executable(QuadrupedSim)
 target_sources(QuadrupedSim PRIVATE src/main.cpp)
 
-target_include_directories(Mycraft PRIVATE "include" "src")
+target_include_directories(QuadrupedSim PRIVATE "include" "src")
 
 # add_subdirectory(src/core)
 target_link_libraries(QuadrupedSim ${Boost_LIBRARIES})

@@ -1,0 +1,11 @@
+file(GLOB MESHES
+    "${CMAKE_CURRENT_SOURCE_DIR}/meshes/*.stl")
+
+file(GLOB XML
+    "${CMAKE_CURRENT_SOURCE_DIR}/xml/*.xml")
+
+file(COPY ${MESHES} 
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/meshes)
+
+file(COPY ${XML} 
+     DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/xml)
