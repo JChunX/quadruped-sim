@@ -354,21 +354,6 @@
 			"path" : "/usr/local/lib/cmake/glfw3/glfw3Targets-noconfig.cmake"
 		},
 		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/opt/homebrew/Cellar/cmake/3.24.2/share/cmake/Modules/FindOpenGL.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/opt/homebrew/Cellar/cmake/3.24.2/share/cmake/Modules/FindPackageHandleStandardArgs.cmake"
-		},
-		{
-			"isCMake" : true,
-			"isExternal" : true,
-			"path" : "/opt/homebrew/Cellar/cmake/3.24.2/share/cmake/Modules/FindPackageMessage.cmake"
-		},
-		{
 			"path" : "models/CMakeLists.txt"
 		}
 	],

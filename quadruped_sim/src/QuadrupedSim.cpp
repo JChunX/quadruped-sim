@@ -69,6 +69,7 @@ void QuadrupedSim::render() {
 
     // process pending GUI events, call GLFW callbacks
     glfwPollEvents();
+
 }
 
 void QuadrupedSim::shutdown() {

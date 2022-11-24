@@ -20,7 +20,7 @@ find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(mujoco REQUIRED)
 
 find_package(glfw3 3.3 REQUIRED)
-find_package(OpenGL REQUIRED)
+#find_package(OpenGL REQUIRED)
 
 if(Boost_FOUND)
   include_directories(${Boost_INCLUDE_DIRS})
@@ -38,6 +38,6 @@ target_link_libraries(QuadrupedSim ${Boost_LIBRARIES})
 target_link_libraries(QuadrupedSim mujoco::mujoco)
 target_link_libraries(QuadrupedSim Eigen3::Eigen)
 target_link_libraries(QuadrupedSim glfw)
-target_link_libraries(QuadrupedSim OpenGL::GL)
+#target_link_libraries(QuadrupedSim OpenGL::GL)
 
 install(TARGETS QuadrupedSim DESTINATION bin)

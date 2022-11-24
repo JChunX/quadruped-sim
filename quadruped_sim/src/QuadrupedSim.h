@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <mujoco/mujoco.h>
 #include <string>
+#include <iostream>
 
 class QuadrupedSim
 {
