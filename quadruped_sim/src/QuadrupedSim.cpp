@@ -14,7 +14,9 @@ QuadrupedSim::~QuadrupedSim() {
 
 void QuadrupedSim::run() {
     while (!glfwWindowShouldClose(window)) {
+        std::cout << "======" << std::endl;
         update();
+        std::cout << "render" << std::endl;
         render();
     }
     shutdown();
@@ -41,11 +43,14 @@ void QuadrupedSim::init() {
     mjv_makeScene(m, &scn, 2000);
     mjr_makeContext(m, &con, mjFONTSCALE_150);
 
+    Input &input = Input::getInstance();
+    input.set_mj_variables(m, d, &cam, &vopt, &scn, &con);
+
     // install GLFW mouse and keyboard callbacks
-    glfwSetKeyCallback(window, &QuadrupedSim::keyboard);
-    glfwSetCursorPosCallback(window, &QuadrupedSim::mouse_move);
-    glfwSetMouseButtonCallback(window, &QuadrupedSim::mouse_button);
-    glfwSetScrollCallback(window, &QuadrupedSim::scroll);
+    glfwSetKeyCallback(window, &Input::keyboard);
+    glfwSetCursorPosCallback(window, &Input::mouse_move);
+    glfwSetMouseButtonCallback(window, &Input::mouse_button);
+    glfwSetScrollCallback(window, &Input::scroll);
 }
 
 void QuadrupedSim::update() {
@@ -73,26 +78,28 @@ void QuadrupedSim::render() {
 }
 
 void QuadrupedSim::shutdown() {
-  //free visualization storage
-  mjv_freeScene(&scn);
-  //mjr_freeContext(&con);
+    //free visualization storage
+    mjv_freeScene(&scn);
+    mjr_freeContext(&con);
 
-  // free MuJoCo model and data
-  //mj_deleteData(d);
-  //mj_deleteModel(m);
+    // free MuJoCo model and data
+    mj_deleteData(d);
+    mj_deleteModel(m);
 
-  // terminate GLFW (crashes with Linux NVidia drivers)
-//#if defined(__APPLE__) || defined(_WIN32)
-  //glfwTerminate();
-//#endif
+//terminate GLFW (crashes with Linux NVidia drivers)
+
+#if defined(__APPLE__) || defined(_WIN32)
+  glfwTerminate();
+#endif
 
     return;
 }
 
 void QuadrupedSim::load_model_and_data(std::string model_path) {
+    std::cout << "Loading model from " << model_path << std::endl;
     // load and compile model
     char error[1000] = "Could not load binary model";
-    if (model_path.length()>4 && !std::strcmp(model_path.c_str() + model_path.length() - 4, ".mjb")) {
+    if (model_path.length()>4 && !std::string(model_path.end()-4, model_path.end()).compare(".mjb")) {
         m = mj_loadModel(model_path.c_str(), 0);
     } else {
         m = mj_loadXML(model_path.c_str(), 0, error, 1000);
@@ -105,60 +112,3 @@ void QuadrupedSim::load_model_and_data(std::string model_path) {
     d = mj_makeData(m);
 }
 
-void QuadrupedSim::keyboard_impl(GLFWwindow* window, int key, int scancode, int act, int mods) {
-      // backspace: reset simulation
-    if (act==GLFW_PRESS && key==GLFW_KEY_BACKSPACE) {
-        mj_resetData(m, d);
-        mj_forward(m, d);
-    }
-}
-
-void QuadrupedSim::mouse_button_impl(GLFWwindow* window, int button, int act, int mods) {
-  // update button state
-  button_left = (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT)==GLFW_PRESS);
-  button_middle = (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE)==GLFW_PRESS);
-  button_right = (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT)==GLFW_PRESS);
-
-  // update mouse position
-  glfwGetCursorPos(window, &lastx, &lasty);
-}
-
-void QuadrupedSim::mouse_move_impl(GLFWwindow* window, double xpos, double ypos) {
-    // no buttons down: nothing to do
-    if (!button_left && !button_middle && !button_right) {
-        return;
-    }
-
-    // compute mouse displacement, save
-    double dx = xpos - lastx;
-    double dy = ypos - lasty;
-    lastx = xpos;
-    lasty = ypos;
-
-    // get current window size
-    int width, height;
-    glfwGetWindowSize(window, &width, &height);
-
-    // get shift key state
-    bool mod_shift = (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT)       
-                    ==GLFW_PRESS ||
-                    glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT)==GLFW_PRESS);
-
-    // determine act based on mouse button
-    mjtMouse act;
-    if (button_right) {
-        act = mod_shift ? mjMOUSE_MOVE_H : mjMOUSE_MOVE_V;
-    } else if (button_left) {
-        act = mod_shift ? mjMOUSE_ROTATE_H : mjMOUSE_ROTATE_V;
-    } else {
-        act = mjMOUSE_ZOOM;
-    }
-
-    // move camera
-    mjv_moveCamera(m, act, dx/height, dy/height, &scn, &cam);
-}
-
-void QuadrupedSim::scroll_impl(GLFWwindow* window, double xoffset, double yoffset) {
-    // emulate vertical mouse motion = 5% of window height
-    mjv_moveCamera(m, mjMOUSE_ZOOM, 0, -0.05*yoffset, &scn, &cam);
-}

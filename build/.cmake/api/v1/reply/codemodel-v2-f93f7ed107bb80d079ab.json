@@ -11,7 +11,6 @@
 						1
 					],
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-2be68763f66b6a5936e1.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.13"
@@ -25,7 +24,6 @@
 				},
 				{
 					"build" : "models",
-					"jsonFile" : "directory-models-Debug-85536f1cc26d7ce72aeb.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.13"
@@ -56,7 +54,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "QuadrupedSim::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-QuadrupedSim-Debug-dc61ada1048f0ea3e179.json",
+					"jsonFile" : "target-QuadrupedSim-Debug-4f65527d6bb2f531fde3.json",
 					"name" : "QuadrupedSim",
 					"projectIndex" : 0
 				}
@@ -66,12 +64,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/jasonx/Dropbox/repos/quadruped-sim/build",
-		"source" : "/Users/jasonx/Dropbox/repos/quadruped-sim/quadruped_sim"
+		"build" : "/home/jasonx/Dropbox/repos/quadruped-sim/build",
+		"source" : "/home/jasonx/Dropbox/repos/quadruped-sim/quadruped_sim"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 4
+		"minor" : 0
 	}
 }

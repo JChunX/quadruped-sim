@@ -30,6 +30,7 @@ add_executable(QuadrupedSim)
 target_sources(QuadrupedSim PRIVATE 
   src/main.cpp
   src/QuadrupedSim.cpp
+  src/Input.cpp
 )
 
 target_include_directories(QuadrupedSim PRIVATE "include" "src")
