@@ -15,6 +15,8 @@ set(Boost_USE_RELEASE_LIBS       ON)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
+find_package(drake CONFIG REQUIRED PATHS /opt/drake)
+
 find_package(Boost REQUIRED COMPONENTS system iostreams)
 find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(mujoco REQUIRED)

@@ -14,9 +14,7 @@ QuadrupedSim::~QuadrupedSim() {
 
 void QuadrupedSim::run() {
     while (!glfwWindowShouldClose(window)) {
-        std::cout << "======" << std::endl;
         update();
-        std::cout << "render" << std::endl;
         render();
     }
     shutdown();
