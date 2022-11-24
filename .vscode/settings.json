@@ -1,3 +1,9 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/quadruped_sim"
+    "cmake.sourceDirectory": "${workspaceFolder}/quadruped_sim",
+    "files.associations": {
+        "*.sdf": "xml",
+        "*.world": "xml",
+        "random": "cpp",
+        "__locale": "cpp"
+    }
 }
