@@ -1,14 +1,17 @@
 #include "Input.h"
 
-Input::Input() {
+Input::Input() 
+{
 
 }
 
-Input::~Input() {
+Input::~Input() 
+{
 
 }
 
-void Input::keyboard_impl(GLFWwindow* window, int key, int scancode, int act, int mods) {
+void Input::keyboard_impl(GLFWwindow* window, int key, int scancode, int act, int mods) 
+{
     std::cout << "key: " << key << std::endl;
       // backspace: reset simulation
     if (act==GLFW_PRESS && key==GLFW_KEY_BACKSPACE) {
@@ -17,8 +20,8 @@ void Input::keyboard_impl(GLFWwindow* window, int key, int scancode, int act, in
     }
 }
 
-void Input::mouse_button_impl(GLFWwindow* window, int button, int act, int mods) {
-    std::cout << "mouse button: " << button << std::endl;
+void Input::mouse_button_impl(GLFWwindow* window, int button, int act, int mods) 
+{
     // update button state
     button_left = (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT)==GLFW_PRESS);
     button_middle = (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE)==GLFW_PRESS);
@@ -28,14 +31,13 @@ void Input::mouse_button_impl(GLFWwindow* window, int button, int act, int mods)
     glfwGetCursorPos(window, &lastx, &lasty);
 }
 
-void Input::mouse_move_impl(GLFWwindow* window, double xpos, double ypos) {
-    std::cout << "mouse move: " << xpos << ", " << ypos << std::endl;
+void Input::mouse_move_impl(GLFWwindow* window, double xpos, double ypos) 
+{
     // no buttons down: nothing to do
     if (!button_left && !button_middle && !button_right) {
         return;
     }
 
-    std::cout << "mouse has button down" << std::endl;
     // compute mouse displacement, save
     double dx = xpos - lastx;
     double dy = ypos - lasty;
@@ -65,8 +67,9 @@ void Input::mouse_move_impl(GLFWwindow* window, double xpos, double ypos) {
     mjv_moveCamera(m, act, dx/height, dy/height, scn, cam);
 }
 
-void Input::scroll_impl(GLFWwindow* window, double xoffset, double yoffset) {
-    std::cout << "scroll: " << xoffset << ", " << yoffset << std::endl;
+void Input::scroll_impl(GLFWwindow* window, double xoffset, double yoffset) 
+{
+
     // emulate vertical mouse motion = 5% of window height
     mjv_moveCamera(m, mjMOUSE_ZOOM, 0, -0.05*yoffset, scn, cam);
 }

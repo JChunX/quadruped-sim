@@ -33,9 +33,12 @@ target_sources(QuadrupedSim PRIVATE
   src/main.cpp
   src/QuadrupedSim.cpp
   src/Input.cpp
+  src/Application.cpp
 )
 
 target_include_directories(QuadrupedSim PRIVATE "include" "src")
+
+add_subdirectory(src/controllers)
 
 target_link_libraries(QuadrupedSim ${Boost_LIBRARIES})
 target_link_libraries(QuadrupedSim mujoco::mujoco)

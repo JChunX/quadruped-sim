@@ -1,7 +1,7 @@
 version: '2'
 services:
   drake:
-    image: jchunx/drake-dev:latest
+    image: jchun/drake-dev:latest
     environment:
       - DISPLAY=novnc:0.0
     depends_on:

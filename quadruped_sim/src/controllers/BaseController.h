@@ -1,27 +1,35 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#ifndef BASECONTROLLER_H
+#define BASECONTROLLER_H
 
 #include <mujoco/mujoco.h>
+#include <vector>
+#include "Controller.h"
+
+/*
+BaseController's child classes (eg. QuadrupedController) acts as the entrypoint for all downstream controllers.
+*/
+
 
 class BaseController
 {
-/*
-Base controller class
-*/
 
 public:
-    Controller();
-    ~Controller();
+    BaseController();
+    ~BaseController();
 
-    static BaseController& getInstance()
+    static BaseController& get_instance()
     {
         static BaseController instance;
         return instance;
     }
 
     static void controller(const mjModel* m, mjData* d) {
-        getInstance().controller_impl(m, d);
+        get_instance().controller_impl(m, d);
     }
+
+    void add_controller();
+
+    std::vector<Controller> controllers;
 
 private:
 
@@ -29,4 +37,4 @@ private:
 
 };
 
-#endif // CONTROLLER_H
+#endif // BASECONTROLLER_H

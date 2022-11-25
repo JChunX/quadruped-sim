@@ -6,8 +6,12 @@ port=$(echo -n $port | tail -c 4)
 
 echo Opening novnc at http://localhost:${port}
 
-xdg-open http://localhost:${port}/vnc.html &
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    xdg-open http://localhost:${port}/vnc.html &
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    open http://localhost:${port}/vnc.html &
+fi
 
 echo Running sim..
 
-docker exec quadruped-sim_drake_1 bash -c "cd /quadruped-sim/quadruped_sim/build ; ./QuadrupedSim"
+docker exec quadruped-sim_drake_1 bash -c "cd /quadruped-sim/build ; ./QuadrupedSim"

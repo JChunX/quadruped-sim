@@ -11,7 +11,7 @@ public:
     Input();
     ~Input();
 
-    static Input& getInstance() // Singleton is accessed via getInstance()
+    static Input& get_instance() // Singleton is accessed via get_instance()
     {
         static Input instance; // lazy singleton, instantiated on first use
         return instance;
@@ -28,16 +28,16 @@ public:
 
     //https://stackoverflow.com/questions/7676971/pointing-to-a-function-that-is-a-class-member-glfw-setkeycallback   
     static void keyboard(GLFWwindow* window, int key, int scancode, int act, int mods) {
-        getInstance().keyboard_impl(window, key, scancode, act, mods);
+        get_instance().keyboard_impl(window, key, scancode, act, mods);
     }
     static void mouse_move(GLFWwindow* window, double xpos, double ypos) {
-        getInstance().mouse_move_impl(window, xpos, ypos);
+        get_instance().mouse_move_impl(window, xpos, ypos);
     }
     static void mouse_button(GLFWwindow* window, int button, int act, int mods) {
-        getInstance().mouse_button_impl(window, button, act, mods);
+        get_instance().mouse_button_impl(window, button, act, mods);
     }
     static void scroll(GLFWwindow* window, double xoffset, double yoffset) {
-        getInstance().scroll_impl(window, xoffset, yoffset);
+        get_instance().scroll_impl(window, xoffset, yoffset);
     }
 
 private:

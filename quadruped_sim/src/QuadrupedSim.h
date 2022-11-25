@@ -6,31 +6,41 @@
 #include <string>
 #include <iostream>
 #include "Input.h"
+#include "controllers/BaseController.h"
+#include "controllers/Controller.h"
+#include "controllers/MPCController.h"
 
 class QuadrupedSim
 {
 
 public:
-    QuadrupedSim();
+    QuadrupedSim(std::string model_path);
     ~QuadrupedSim();
-    void run();
+    void step();
+    void render();
+    void load_model_and_data();
 
     // MuJoCo data structures
     mjModel* m = NULL;
     mjData* d = NULL;
+    // Number of MuJoCo steps to run for every call to step()
+    int num_substeps = 35;
+
+    GLFWwindow* window = NULL;
+    bool gl_ok() {
+        return !glfwWindowShouldClose(window);
+    }
+
+private:
+    void initialize();
+    void shutdown();
+    
     mjvCamera cam;
     mjvOption vopt;
     mjvScene scn;
     mjrContext con;
 
-    GLFWwindow* window = NULL;
-
-private:
-    void init();
-    void update();
-    void render();
-    void shutdown();
-    void load_model_and_data(std::string model_path);
+    std::string model_path;
 };
 
 #endif // QUADRUPED_SIM_H

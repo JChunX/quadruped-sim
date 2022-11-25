@@ -1,4 +1,5 @@
 {
-    "cmake.cmakePath": "/usr/bin/cmake",
-    "cmake.sourceDirectory": "${workspaceFolder}/quadruped_sim"
+    "cmake.cmakePath": "/usr/local/bin/cmake",
+    "cmake.sourceDirectory": "${workspaceFolder}/quadruped_sim",
+    "ros.distro": "foxy"
 }

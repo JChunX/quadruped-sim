@@ -1,27 +1,18 @@
 #include"QuadrupedSim.h"
 
-/*
-Simulator entrypoint
-*/
-
-QuadrupedSim::QuadrupedSim() {
-    init();
+QuadrupedSim::QuadrupedSim(std::string model_path)
+ : model_path(model_path){
+    initialize();
 }
 
-QuadrupedSim::~QuadrupedSim() {
+QuadrupedSim::~QuadrupedSim() 
+{
     
 }
 
-void QuadrupedSim::run() {
-    while (!glfwWindowShouldClose(window)) {
-        update();
-        render();
-    }
-    shutdown();
-}
-
-void QuadrupedSim::init() {
-    load_model_and_data("models/xml/mini_cheetah.xml");
+void QuadrupedSim::initialize() 
+{
+    load_model_and_data();
     if (!glfwInit()) {
         mju_error("Could not initialize GLFW");
     }
@@ -41,7 +32,7 @@ void QuadrupedSim::init() {
     mjv_makeScene(m, &scn, 2000);
     mjr_makeContext(m, &con, mjFONTSCALE_150);
 
-    Input &input = Input::getInstance();
+    Input &input = Input::get_instance();
     input.set_mj_variables(m, d, &cam, &vopt, &scn, &con);
 
     // install GLFW mouse and keyboard callbacks
@@ -49,16 +40,22 @@ void QuadrupedSim::init() {
     glfwSetCursorPosCallback(window, &Input::mouse_move);
     glfwSetMouseButtonCallback(window, &Input::mouse_button);
     glfwSetScrollCallback(window, &Input::scroll);
+
+    BaseController &base_controller = BaseController::get_instance();
+    base_controller.add_controller();
+    mjcb_control = &BaseController::controller;
 }
 
-void QuadrupedSim::update() {
-    mjtNum simstart = d->time;
-    while (d->time - simstart < 0.01) {
+void QuadrupedSim::step() 
+{
+    for (int i=0; i<num_substeps; i++)
+    {
         mj_step(m, d);
     }
 }
 
-void QuadrupedSim::render() {
+void QuadrupedSim::render() 
+{
     // get framebuffer viewport
     mjrRect viewport = {0, 0, 0, 0};
     glfwGetFramebufferSize(window, &viewport.width, &viewport.height);
@@ -75,7 +72,8 @@ void QuadrupedSim::render() {
 
 }
 
-void QuadrupedSim::shutdown() {
+void QuadrupedSim::shutdown() 
+{
     //free visualization storage
     mjv_freeScene(&scn);
     mjr_freeContext(&con);
@@ -93,7 +91,8 @@ void QuadrupedSim::shutdown() {
     return;
 }
 
-void QuadrupedSim::load_model_and_data(std::string model_path) {
+void QuadrupedSim::load_model_and_data() 
+{
     std::cout << "Loading model from " << model_path << std::endl;
     // load and compile model
     char error[1000] = "Could not load binary model";
