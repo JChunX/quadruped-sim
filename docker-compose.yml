@@ -1,0 +1,28 @@
+version: '2'
+services:
+  drake:
+    image: jchunx/drake-dev:latest
+    environment:
+      - DISPLAY=novnc:0.0
+    depends_on:
+      - novnc
+    networks:
+      - x11
+    command: tail -F /dev/null
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/quadruped-sim/
+
+  novnc:  
+    image: theasp/novnc:latest
+    environment:
+      # Adjust to your screen size
+      - DISPLAY_WIDTH=1600
+      - DISPLAY_HEIGHT=968
+    ports:
+      - "8080:8080"
+    networks:
+      - x11
+networks:
+  x11:

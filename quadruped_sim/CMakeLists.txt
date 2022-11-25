@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 project(QuadrupedSim VERSION 1.0)
 add_subdirectory(models)
 
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -16,7 +17,6 @@ set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 
 find_package(drake CONFIG REQUIRED PATHS /opt/drake)
-
 find_package(Boost REQUIRED COMPONENTS system iostreams)
 find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(mujoco REQUIRED)
@@ -41,6 +41,6 @@ target_link_libraries(QuadrupedSim ${Boost_LIBRARIES})
 target_link_libraries(QuadrupedSim mujoco::mujoco)
 target_link_libraries(QuadrupedSim Eigen3::Eigen)
 target_link_libraries(QuadrupedSim glfw)
-#target_link_libraries(QuadrupedSim OpenGL::GL)
+target_link_libraries(QuadrupedSim drake::drake)
 
 install(TARGETS QuadrupedSim DESTINATION bin)
